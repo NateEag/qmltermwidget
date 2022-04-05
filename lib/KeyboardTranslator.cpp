@@ -50,12 +50,19 @@ const QByteArray KeyboardTranslatorManager::defaultTranslatorText(
 "key Tab : \"\\t\""
 );
 
-#ifdef Q_OS_MAC
+// This made sense up until the main app added
+//
+// app.setAttribute(Qt::AA_MacDontSwapCtrlAndMeta, true);
+//
+// in Jan. 2022, commit 28977313daab. Leaving it set to Qt::ControlModifier as
+// below solves Control key combos doing bizarre things on the Mac.
+
+// #ifdef Q_OS_MAC
 // On Mac, Qt::ControlModifier means Cmd, and MetaModifier means Ctrl
-const Qt::KeyboardModifier KeyboardTranslator::CTRL_MOD = Qt::MetaModifier;
-#else
+// const Qt::KeyboardModifier KeyboardTranslator::CTRL_MOD = Qt::MetaModifier;
+// #else
 const Qt::KeyboardModifier KeyboardTranslator::CTRL_MOD = Qt::ControlModifier;
-#endif
+// #endif
 
 KeyboardTranslatorManager::KeyboardTranslatorManager()
     : _haveLoadedAll(false)

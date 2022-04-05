@@ -1032,20 +1032,29 @@ QKeyEvent * Vt102Emulation::remapKeyModifiersForMac(QKeyEvent *event) {
 
   QFlags<Qt::KeyboardModifier> isTheLabeledKeyCommandPressed = modifiers & Qt::ControlModifier;
   QFlags<Qt::KeyboardModifier> isTheLabeledKeyControlPressed = modifiers & Qt::MetaModifier;
-  if (isTheLabeledKeyCommandPressed){
-    qDebug("Command is pressed.");
-    modifiers &= ~Qt::ControlModifier;
-    modifiers |= Qt::MetaModifier;
-  } else {
-    modifiers &= ~Qt::MetaModifier;
-  }
 
-  if (isTheLabeledKeyControlPressed) {
-    qDebug("Control is pressed.");
-    modifiers &= ~Qt::MetaModifier;
-    modifiers |= Qt::ControlModifier;
-  } else {
-    modifiers &= ~Qt::ControlModifier;
+  // This made sense up until the main app added
+  //
+  // app.setAttribute(Qt::AA_MacDontSwapCtrlAndMeta, true);
+  //
+  // in Jan. 2022, commit 28977313daab.
+
+  // if (isTheLabeledKeyCommandPressed){
+  //   qDebug("Command is pressed.");
+  //   modifiers &= ~Qt::ControlModifier;
+  //   modifiers |= Qt::MetaModifier;
+  // } else {
+  //   modifiers &= ~Qt::MetaModifier;
+  // }
+
+  // if (isTheLabeledKeyControlPressed) {
+  //   qDebug("Control is pressed.");
+  //   modifiers &= ~Qt::MetaModifier;
+  //   modifiers |= Qt::ControlModifier;
+  // } else {
+  //   modifiers &= ~Qt::ControlModifier;
+  // }
+
   }
 
   return new QKeyEvent(QEvent::None, event->key(), modifiers,
